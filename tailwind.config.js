@@ -4,11 +4,33 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily:{
         'sans' : ['Inter', 'sans-serif']
-      }
+      },
+      animation: {
+        'blob': 'blob 7s infinite',
+        'paper-plane': 'paper-plane 1.5s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        },
+        'paper-plane': {
+          '0%, 100%': { transform: 'translateX(0) rotate(0deg)' },
+          '50%': { transform: 'translateX(10px) rotate(15deg)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+      },
     },
   },
   plugins: [],
