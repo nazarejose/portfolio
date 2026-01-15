@@ -33,7 +33,7 @@ export function Contact() {
         setIsSubmitting(false);
         return;
       }
-      
+
     try {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -47,7 +47,7 @@ export function Contact() {
       );
 
       setSubmitStatus("success");
-      setFormData({ name: "", email: "", message: ""});
+      setFormData({ name: "", email: "", message: "", company: ""});
     } catch (error) {
       console.error(error);
       setSubmitStatus("error");

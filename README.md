@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# 🌐 Portfólio — José Nazaré
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o meu **portfólio profissional**, desenvolvido para apresentar meus projetos, habilidades técnicas e formas de contato na área de tecnologia.
 
-Currently, two official plugins are available:
+🔗 **Acesse o portfólio:** https://exemplo.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Sobre
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+O portfólio reúne projetos desenvolvidos com foco em boas práticas, tecnologias modernas e experiência do usuário.  
+Ele está em constante evolução, acompanhando meu aprendizado e crescimento profissional.
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## 🚀 Funcionalidades
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Exibição de projetos com descrição, tecnologias e links
+- Suporte a múltiplos idiomas
+- Interface responsiva e moderna
+- Modo claro e escuro
+- Formulário de contato com envio direto de e-mail
+- Proteção básica contra spam
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- React
+- TypeScript
+- Tailwind CSS
+- EmailJS
+
+---
+
+## 📬 Contato
+
+Você pode entrar em contato comigo diretamente pelo **formulário disponível no site** ou através dos canais abaixo:
+
+- GitHub: https://github.com/nazarejose  
+- LinkedIn: https://www.linkedin.com/in/josenazare  
+- Email: nazarejosecontact@gmail.com  
+
+---
+
+## 📌 Observação
+
+Este portfólio tem caráter profissional e demonstrativo, servindo como vitrine dos meus projetos e competências técnicas.
