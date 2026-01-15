@@ -30,6 +30,7 @@ const projects: Project[] = [
     technologies: ["React", "TypeScript", "TailwindCSS", "Vercel"],
     githubUrl: "https://github.com/nazarejose/e-commerce",
     demoUrl: "https://e-commerce-frontend-omega-gray.vercel.app/",
+    image: "ecommercefront.png",
     inProgress: false,
   },
   {
@@ -49,6 +50,7 @@ const projects: Project[] = [
     technologies: ["React", "TypeScript", "TailwindCSS", "Vercel"],
     githubUrl: "https://github.com/nazarejose/note-creator-nlw",
     demoUrl: "https://note-creator-nlw.vercel.app/",
+    image: "nlwnotes.png",
     inProgress: false,
   },
 ];
