@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
+import emailjs from "@emailjs/browser";
 
 export function Contact() {
   const { t } = useLanguage();
@@ -7,11 +8,16 @@ export function Contact() {
     name: "",
     email: "",
     message: "",
+    company: "", // honeypot
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -23,51 +29,71 @@ export function Contact() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Using mailto as fallback, but you can integrate with a service like EmailJS or your backend
-    const subject = encodeURIComponent(`Contact from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    
-    // For now, we'll use mailto. In production, you'd want to use a service like EmailJS
-    window.location.href = `mailto:nazarejosecontact@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Simulate API call delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+    if (formData.company) {
+        setIsSubmitting(false);
+        return;
+      }
       
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", message: ""});
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+
       setTimeout(() => {
         setSubmitStatus(null);
       }, 5000);
-    }, 1000);
+    }
   };
 
   return (
-    <section 
-      id="contact" 
+    <section
+      id="contact"
       className="w-full py-20 px-4 md:px-8 lg:px-[15.5rem] bg-gray-50 dark:bg-gray-800 transition-colors duration-300"
     >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            {t('contact.title')}
+            {t("contact.title")}
           </h2>
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400">
-            {t('contact.subtitle')}
+            {t("contact.subtitle")}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honeypot (anti-spam) */}
+            <input
+              type="text"
+              name="company"
+              value={(formData as any).company || ""}
+              onChange={handleChange}
+              className="hidden"
+              autoComplete="off"
+              tabIndex={-1}
+            />
             <div>
-              <label 
-                htmlFor="name" 
+              <label
+                htmlFor="name"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
-                {t('contact.name')}
+                {t("contact.name")}
               </label>
               <input
                 type="text"
@@ -77,16 +103,16 @@ export function Contact() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder={t('contact.name')}
+                placeholder={t("contact.name")}
               />
             </div>
 
             <div>
-              <label 
-                htmlFor="email" 
+              <label
+                htmlFor="email"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
-                {t('contact.email')}
+                {t("contact.email")}
               </label>
               <input
                 type="email"
@@ -96,16 +122,16 @@ export function Contact() {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder={t('contact.email')}
+                placeholder={t("contact.email")}
               />
             </div>
 
             <div>
-              <label 
-                htmlFor="message" 
+              <label
+                htmlFor="message"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
               >
-                {t('contact.message')}
+                {t("contact.message")}
               </label>
               <textarea
                 id="message"
@@ -115,35 +141,40 @@ export function Contact() {
                 required
                 rows={6}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-                placeholder={t('contact.message')}
+                placeholder={t("contact.message")}
               />
             </div>
 
             {submitStatus === "success" && (
               <div className="p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
-                {t('contact.success')}
+                {t("contact.success")}
               </div>
             )}
 
             {submitStatus === "error" && (
               <div className="p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
-                {t('contact.error')}
+                {t("contact.error")}
               </div>
             )}
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={
+                isSubmitting ||
+                !formData.name ||
+                !formData.email ||
+                !formData.message
+              }
               className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
                   <i className="fa-solid fa-spinner fa-spin"></i>
-                  {t('contact.sending')}
+                  {t("contact.sending")}
                 </>
               ) : (
                 <>
-                  {t('contact.send')}
+                  {t("contact.send")}
                   <i className="fa-regular fa-paper-plane"></i>
                 </>
               )}
@@ -154,10 +185,10 @@ export function Contact() {
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                {t('contact.title')}
+                {t("contact.title")}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                {t('contact.subtitle')}
+                {t("contact.subtitle")}
               </p>
             </div>
 
@@ -172,8 +203,12 @@ export function Contact() {
                   <i className="fab fa-github text-2xl text-gray-700 dark:text-gray-300"></i>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 dark:text-white">GitHub</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">github.com/nazarejose</p>
+                  <p className="font-medium text-gray-900 dark:text-white">
+                    GitHub
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    github.com/nazarejose
+                  </p>
                 </div>
               </a>
 
@@ -187,8 +222,12 @@ export function Contact() {
                   <i className="fab fa-linkedin-in text-2xl text-gray-700 dark:text-gray-300"></i>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 dark:text-white">LinkedIn</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">linkedin.com/in/josenazare</p>
+                  <p className="font-medium text-gray-900 dark:text-white">
+                    LinkedIn
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    linkedin.com/in/josenazare
+                  </p>
                 </div>
               </a>
 
@@ -200,8 +239,12 @@ export function Contact() {
                   <i className="fa-solid fa-envelope text-2xl text-gray-700 dark:text-gray-300"></i>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900 dark:text-white">Email</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">nazarejosecontact@gmail.com</p>
+                  <p className="font-medium text-gray-900 dark:text-white">
+                    Email
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    nazarejosecontact@gmail.com
+                  </p>
                 </div>
               </a>
             </div>
