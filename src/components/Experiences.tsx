@@ -64,7 +64,7 @@ export function Experiences() {
         </div>
 
         <div className="space-y-8">
-          {experiences.map((exp, index) => (
+          {experiences.map((exp) => (
             <div
               key={exp.id}
               className="relative pl-8 md:pl-12 border-l-4 border-blue-600 dark:border-blue-400"
