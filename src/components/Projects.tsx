@@ -1,6 +1,7 @@
 import { useLanguage } from "../contexts/LanguageContext";
 import ecommerceFront from "../assets/ecommercefront.png";
 import nlwnotes from "../assets/nlwnotes.png";
+import lifetrackgif from "../assets/lifetrackgif.gif"
 
 interface Project {
   id: number;
@@ -19,11 +20,13 @@ const projects: Project[] = [
     id: 1,
     title: "LifeTrack",
     description:
-      "Sistema de rastreamento e gestão de vida desenvolvido com NestJS. Aplicação backend completa com APIs REST, autenticação e gerenciamento de dados.",
+      "Sistema de gestão de finanças e hábitos desenvolvido com Next.js e NestJS. Uma aplicação full stack completa, com APIs REST, autenticação, gerenciamento de dados, design responsivo com foco em UI e escalabilidade.",
     descriptionEn:
-      "Life tracking and management system developed with NestJS. Complete backend application with REST APIs, authentication, and data management.",
-    technologies: ["NestJS", "TypeScript", "Prisma", "PostgreSQL"],
+      "Financial and habit management system built with Next.js and NestJS. A complete full-stack application featuring REST APIs, authentication, data management, responsive design focused on UI, and scalability.",
+    technologies: ["Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL"],
+    demoUrl: "https://lifetrack-frontend-kappa.vercel.app/",
     githubUrl: "https://github.com/nazarejose/lifetrack",
+    image: lifetrackgif,
     inProgress: true,
   },
   {
